@@ -422,38 +422,6 @@
       color: #71717a;
     }
 
-    /* ------------------------------ cta section ------------------------------ */
-    .cta-section {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 96px 24px;
-      text-align: center;
-    }
-
-    .cta-title {
-      margin-top: 20px;
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-
-    .cta-title .dim {
-      color: #52525b;
-    }
-
-    .cta-desc {
-      margin: 24px auto 0;
-      max-width: 480px;
-      font-size: 15px;
-      line-height: 1.65;
-      color: #a1a1aa;
-    }
-
-    .cta-section .hero-cta {
-      margin-top: 36px;
-      animation: none;
-    }
-
     /* ------------------------------ models ------------------------------ */
     .models {
       border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -565,6 +533,236 @@
       font-size: 14px;
       line-height: 1.65;
       color: #71717a;
+    }
+
+    /* ------------------------------ apps ------------------------------ */
+    .apps {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      scroll-margin-top: 80px;
+    }
+
+    .apps-inner {
+      padding: 96px 24px;
+    }
+
+    .apps-title {
+      margin-top: 20px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .apps-title .dim {
+      color: #52525b;
+    }
+
+    .apps-desc {
+      margin-top: 20px;
+      max-width: 560px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #a1a1aa;
+    }
+
+    .apps-grid {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .app-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #111113 0%, #0a0a0b 100%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .app-card:hover {
+      border-color: rgba(220, 38, 38, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px -24px rgba(220, 38, 38, 0.35);
+    }
+
+    .app-preview {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: #08080a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .app-preview::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #0a0a0b 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .app-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .app-card:hover .app-preview img {
+      transform: scale(1.04);
+    }
+
+    .tg-chat {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      padding: 28px 28px 0;
+    }
+
+    .bubble {
+      max-width: 78%;
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      border-radius: 14px;
+    }
+
+    .bubble-me {
+      align-self: flex-end;
+      background: #dc2626;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble-bot {
+      align-self: flex-start;
+      background: #18181b;
+      color: #e4e4e7;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble-bot b {
+      display: block;
+      margin-bottom: 4px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #ef4444;
+    }
+
+    .app-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 28px;
+    }
+
+    .app-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .app-logo {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .app-logo img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .app-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: #ef4444;
+    }
+
+    .app-name {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .app-platform {
+      margin-left: auto;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #ef4444;
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      border-radius: 999px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+
+    .app-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #71717a;
+    }
+
+    .app-actions {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .btn-download.btn-sm {
+      padding: 13px 24px;
+      font-size: 12px;
+    }
+
+    /* ------------------------------ cta section ------------------------------ */
+    .cta-section {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 96px 24px;
+      text-align: center;
+    }
+
+    .cta-title {
+      margin-top: 20px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .cta-title .dim {
+      color: #52525b;
+    }
+
+    .cta-desc {
+      margin: 24px auto 0;
+      max-width: 480px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #a1a1aa;
+    }
+
+    .cta-section .hero-cta {
+      margin-top: 36px;
+      animation: none;
     }
 
     /* ------------------------------ footer ------------------------------ */
@@ -749,6 +947,24 @@
         font-size: 15px;
       }
 
+      .apps-inner {
+        padding: 144px 24px;
+      }
+
+      .apps-grid {
+        margin-top: 80px;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .app-body {
+        padding: 32px;
+      }
+
+      .app-name {
+        font-size: 22px;
+      }
+
       .footer-inner {
         flex-direction: row;
       }
@@ -842,8 +1058,8 @@
         <div class="reveal" style="transition-delay: 100ms">
           <p class="about-intro">
             Redcat — локальная нейросеть. Она работает на вашем компьютере,
-            отвечает мгновенно зависит от вашего пк, никаких
-            аккаунтов, подписок и ключей скачали и пользуетесь.
+            отвечает мгновенно — скорость зависит от вашего ПК. Никаких
+            аккаунтов, подписок и ключей: скачали и пользуетесь.
           </p>
         </div>
 
@@ -916,9 +1132,8 @@
                     <h3 class="model-name">RedCat-1.0-Flash</h3>
                     <span class="model-params">2B</span>
                   </div>
-                  <!-- ↓ описание напишите здесь ↓ -->
                   <p class="model-desc">
-                    Быстрая версия RedCat подходит для простых задач 
+                    Быстрая версия RedCat подходит для простых задач.
                   </p>
                 </div>
               </div>
@@ -934,9 +1149,25 @@
                     <h3 class="model-name">RedCat-1.0</h3>
                     <span class="model-params">4B</span>
                   </div>
-                  <!-- ↓ описание напишите здесь ↓ -->
                   <p class="model-desc">
-                    Основаня модель подходит для сложных задач
+                    Основная модель создана для сложных задач.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reveal" style="transition-delay: 120ms">
+            <article class="model">
+              <div class="model-inner">
+                <span class="model-number">03</span>
+                <div class="model-content">
+                  <div class="model-head">
+                    <h3 class="model-name">RedCat-X.X-Pro</h3>
+                    <span class="model-params">8B</span>
+                  </div>
+                  <p class="model-desc">
+                    Сильная модель для сложных проектов (планируем).
                   </p>
                 </div>
               </div>
@@ -946,19 +1177,85 @@
       </div>
     </section>
 
-          <div class="reveal" style="transition-delay: 60ms">
-            <article class="model">
-              <div class="model-inner">
-                <span class="model-number">03</span>
-                <div class="model-content">
-                  <div class="model-head">
-                    <h3 class="model-name">RedCat-X.X-Pro</h3>
-                    <span class="model-params">8B</span>
+    <section class="apps" id="apps">
+      <div class="container apps-inner">
+        <div class="reveal">
+          <p class="section-kicker">03 / Приложения</p>
+          <h2 class="apps-title">
+            Общайтесь с RedCat. <span class="dim">Где удобно.</span>
+          </h2>
+          <p class="apps-desc">
+            Telegram или десктопное приложение — выбирайте то, что вам ближе.
+          </p>
+        </div>
+
+        <div class="apps-grid">
+          <div class="reveal">
+            <article class="app-card">
+              <div class="app-preview" aria-hidden="true">
+                <div class="tg-chat">
+                  <div class="bubble bubble-me">Привет, RedCat! 👋</div>
+                  <div class="bubble bubble-bot"><b>RedCat</b>Привет! Я на связи 😼 Чем займёмся?</div>
+                  <div class="bubble bubble-me">Придумай название для котёнка 🐱</div>
+                </div>
+              </div>
+              <div class="app-body">
+                <div class="app-head">
+                  <div class="app-logo">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M9.04 15.31l-.38 5.32c.54 0 .78-.23 1.06-.5l2.55-2.44 5.28 3.87c.97.53 1.66.25 1.92-.9L22.9 4.02c.31-1.42-.51-1.98-1.46-1.63L2.4 9.62c-1.39.54-1.37 1.32-.24 1.67l4.69 1.46L18.2 5.5c.51-.34.98-.15.6.19L9.04 15.31z"/>
+                    </svg>
                   </div>
-                  <!-- ↓ описание напишите здесь ↓ -->
-                  <p class="model-desc">
-                    Сильная модель для сложных проектов (планируем)
-                  </p>
+                  <h3 class="app-name">Telegram</h3>
+                  <span class="app-platform">Мессенджер</span>
+                </div>
+                <p class="app-desc">
+                  Общение с RedCat прямо в Telegram. Новости, обновления и помощь
+                  с установкой — в нашем канале.
+                </p>
+                <div class="app-actions">
+                  <a
+                    class="btn-download btn-sm"
+                    href="https://t.me/RedCatAI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Открыть RedCat в Telegram"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v2H4v-2z"/>
+                    </svg>
+                    Открыть в Telegram
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reveal" style="transition-delay: 100ms">
+            <article class="app-card">
+              <div class="app-preview">
+                <img src="redcat-app.png" alt="Интерфейс приложения Redex" loading="lazy" />
+              </div>
+              <div class="app-body">
+                <div class="app-head">
+                  <div class="app-logo">
+                    <img src="redcat-cat.png" alt="" />
+                  </div>
+                  <h3 class="app-name">Redex</h3>
+                  <span class="app-platform">Десктоп</span>
+                </div>
+                <p class="app-desc">
+                  Полноценный интерфейс RedCat на вашем компьютере: выбирайте
+                  модель, включайте поиск и режим размышлений — всё под рукой.
+                </p>
+                <div class="app-actions">
+                  <!-- замените # на ссылку для скачивания Redex -->
+                  <a class="btn-download btn-sm" href="#" aria-label="Скачать Redex">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v2H4v-2z"/>
+                    </svg>
+                    Скачать Redex
+                  </a>
                 </div>
               </div>
             </article>
@@ -966,11 +1263,11 @@
         </div>
       </div>
     </section>
-    
+
     <section class="cta-section" id="download">
       <div class="container">
         <div class="reveal">
-          <p class="section-kicker">03 / Скачать</p>
+          <p class="section-kicker">04 / Скачать</p>
           <h2 class="cta-title">
             Заберите Redcat <span class="dim">себе.</span>
           </h2>
