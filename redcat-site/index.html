@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050505" />
+  <title>REDCAT — локальная нейросеть</title>
+  <meta name="description" content="Redcat — локальная нейросеть. Работает прямо на вашем компьютере: без облака, без API, без телеметрии. Ваши данные остаются у вас." />
+  <link rel="icon" type="image/png" href="redcat-cat.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ------------------------------ base ------------------------------ */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #050505;
+      color: #f4f4f5;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    ::selection {
+      background: rgba(220, 38, 38, 0.4);
+      color: #ffffff;
+    }
+
+    img {
+      display: block;
+    }
+
+    .mono {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ------------------------------ header ------------------------------ */
+    .header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+    }
+
+    .header.scrolled {
+      background: rgba(5, 5, 5, 0.8);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      color: #a1a1aa;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+    }
+
+    /* ------------------------------ hero ------------------------------ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 0 24px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse 55% 42% at 50% 52%,
+        rgba(220, 38, 38, 0.16),
+        transparent 70%
+      );
+      animation: glow-breathe 6s ease-in-out infinite;
+    }
+
+    .hero-kicker {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.45em;
+      color: #71717a;
+      animation: hero-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .hero-logo {
+      margin-top: 32px;
+      animation: hero-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 150ms both;
+    }
+
+    .hero-logo img {
+      width: min(72vw, 380px);
+      height: auto;
+      transition: filter 0.7s ease;
+    }
+
+    .hero-logo:hover img {
+      filter: drop-shadow(0 0 28px rgba(220, 38, 38, 0.35));
+    }
+
+    .hero-slogan {
+      margin-top: 32px;
+      max-width: 448px;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #a1a1aa;
+      animation: hero-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 300ms both;
+    }
+
+    .hero-slogan .dim {
+      display: block;
+      margin-top: 4px;
+      color: #52525b;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      animation: hero-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) 600ms both;
+    }
+
+    .scroll-hint-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: #52525b;
+    }
+
+    .scroll-hint-line {
+      position: relative;
+      width: 1px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .scroll-hint-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 16px;
+      background: #ef4444;
+      animation: scroll-drip 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    /* ------------------------------ marquee ------------------------------ */
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 40px;
+      white-space: nowrap;
+      animation: marquee-x 36s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .marquee-item span {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #52525b;
+    }
+
+    .marquee-item i {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(220, 38, 38, 0.7);
+      flex-shrink: 0;
+    }
+
+    /* ------------------------------ about ------------------------------ */
+    .about {
+      scroll-margin-top: 80px;
+    }
+
+    .about-inner {
+      padding: 96px 24px;
+    }
+
+    .section-kicker {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: #ef4444;
+    }
+
+    .about-title {
+      margin-top: 20px;
+      max-width: 768px;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+
+    .about-title .dim {
+      color: #52525b;
+    }
+
+    .about-intro {
+      margin-top: 32px;
+      max-width: 672px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #a1a1aa;
+    }
+
+    .facts {
+      margin-top: 56px;
+    }
+
+    .fact {
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 32px 8px 32px 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .fact:first-child {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .fact:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .fact::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #ef4444;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fact:hover::before {
+      transform: scaleY(1);
+    }
+
+    .fact-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .fact-number {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      color: #52525b;
+      transition: color 0.3s ease;
+      flex-shrink: 0;
+      padding-top: 6px;
+    }
+
+    .fact:hover .fact-number {
+      color: #ef4444;
+    }
+
+    .fact-content {
+      max-width: 672px;
+    }
+
+    .fact-title {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .fact-desc {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #71717a;
+    }
+
+    /* ------------------------------ footer ------------------------------ */
+    .footer {
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 40px 24px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-brand img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+
+    .footer-brand span {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: #d4d4d8;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #52525b;
+    }
+
+    .footer-tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #3f3f46;
+    }
+
+    /* ------------------------------ reveal ------------------------------ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ------------------------------ keyframes ------------------------------ */
+    @keyframes hero-in {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes glow-breathe {
+      0%,
+      100% {
+        opacity: 0.55;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes scroll-drip {
+      0% {
+        transform: translateY(-100%);
+      }
+      60%,
+      100% {
+        transform: translateY(300%);
+      }
+    }
+
+    @keyframes marquee-x {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ------------------------------ responsive ------------------------------ */
+    @media (min-width: 768px) {
+      .about-inner {
+        padding: 144px 24px;
+      }
+
+      .hero-slogan {
+        font-size: 18px;
+      }
+
+      .hero-kicker {
+        font-size: 11px;
+      }
+
+      .facts {
+        margin-top: 80px;
+      }
+
+      .fact {
+        padding: 40px 24px 40px 32px;
+      }
+
+      .fact-inner {
+        gap: 40px;
+      }
+
+      .fact-number {
+        width: 32px;
+      }
+
+      .fact-title {
+        font-size: 24px;
+      }
+
+      .fact-desc {
+        font-size: 15px;
+      }
+
+      .footer-inner {
+        flex-direction: row;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .marquee-track,
+      .hero-glow,
+      .scroll-hint-line::after,
+      .hero-kicker,
+      .hero-logo,
+      .hero-slogan,
+      .scroll-hint {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Redcat — на главную">
+        <img src="redcat-cat.png" alt="" />
+        <span>Redcat</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="#about" class="nav-link">О модели</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="flex: 1">
+    <section class="hero" id="top">
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <p class="hero-kicker mono">Локальная нейросеть</p>
+
+      <div class="hero-logo">
+        <img src="redcat-wordmark.png" alt="Redcat — логотип" />
+      </div>
+
+      <p class="hero-slogan">
+        Работает прямо на вашем компьютере.
+        <span class="dim">Без облака. Без интернета. Без компромиссов.</span>
+      </p>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span class="scroll-hint-label mono">Листайте</span>
+        <span class="scroll-hint-line"></span>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+
+    <section class="about" id="about">
+      <div class="container about-inner">
+        <div class="reveal">
+          <p class="section-kicker">01 / О модели</p>
+          <h2 class="about-title">
+            Ваша нейросеть. <span class="dim">Только ваша.</span>
+          </h2>
+        </div>
+
+        <div class="reveal" style="transition-delay: 100ms">
+          <p class="about-intro">
+            Redcat — локальная нейросеть. Она живет на вашем компьютере,
+            отвечает мгновенно и молчит о том, что вы ей пишете. Никаких
+            аккаунтов, подписок и ключей — скачали и пользуетесь.
+          </p>
+        </div>
+
+        <div class="facts">
+          <div class="reveal">
+            <article class="fact">
+              <div class="fact-inner">
+                <span class="fact-number">01</span>
+                <div class="fact-content">
+                  <h3 class="fact-title">Всё на вашем железе</h3>
+                  <p class="fact-desc">
+                    Модель запускается локально и использует только ваш
+                    процессор и видеокарту. Ни один байт не уходит на чужие
+                    серверы.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reveal" style="transition-delay: 60ms">
+            <article class="fact">
+              <div class="fact-inner">
+                <span class="fact-number">02</span>
+                <div class="fact-content">
+                  <h3 class="fact-title">Ноль телеметрии</h3>
+                  <p class="fact-desc">
+                    Никаких аналитик, счётчиков и «анонимной статистики».
+                    Redcat не знает о вас ничего — и не хочет знать.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reveal" style="transition-delay: 120ms">
+            <article class="fact">
+              <div class="fact-inner">
+                <span class="fact-number">03</span>
+                <div class="fact-content">
+                  <h3 class="fact-title">Работает офлайн</h3>
+                  <p class="fact-desc">
+                    Отключите интернет — и Redcat продолжит думать. Ваш чат,
+                    ваши файлы, ваши идеи остаются только у вас.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="redcat-cat.png" alt="" />
+        <span>Redcat</span>
+      </div>
+      <p class="footer-copy">© 2026 Redcat AI. Все права защищены.</p>
+      <p class="footer-tag">Локально · Приватно · Ваше</p>
+    </div>
+  </footer>
+
+  <script>
+    // marquee items (duplicated for seamless loop)
+    var items = [
+      "100% локально",
+      "без облака",
+      "приватно",
+      "офлайн",
+      "данные не покидают компьютер",
+      "без слежки",
+    ];
+    var track = document.getElementById("marqueeTrack");
+    var html = "";
+    for (var r = 0; r < 2; r++) {
+      for (var i = 0; i < items.length; i++) {
+        html +=
+          '<span class="marquee-item"><span>' +
+          items[i] +
+          "</span><i></i></span>";
+      }
+    }
+    track.innerHTML = html;
+
+    // header blur on scroll
+    var header = document.getElementById("header");
+    function onScroll() {
+      if (window.scrollY > 32) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // reveal on scroll
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
+    );
+    document.querySelectorAll(".reveal").forEach(function (el) {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
