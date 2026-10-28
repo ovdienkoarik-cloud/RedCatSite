@@ -617,47 +617,58 @@
       transform: scale(1.04);
     }
 
-    .tg-chat {
-      height: 100%;
+    .model-preview {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: 12px;
-      padding: 28px 28px 0;
+      gap: 22px;
+      background-color: #08080a;
+      background-image:
+        radial-gradient(ellipse 60% 55% at 50% 45%, rgba(220, 38, 38, 0.18), transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: auto, 32px 32px, 32px 32px;
     }
 
-    .bubble {
-      max-width: 78%;
-      padding: 10px 14px;
-      font-size: 13px;
-      line-height: 1.5;
-      border-radius: 14px;
+    .model-preview-logo {
+      width: 96px;
+      height: auto;
+      filter: drop-shadow(0 0 28px rgba(220, 38, 38, 0.35));
     }
 
-    .bubble-me {
-      align-self: flex-end;
-      background: #dc2626;
-      color: #ffffff;
-      border-bottom-right-radius: 4px;
-    }
-
-    .bubble-bot {
-      align-self: flex-start;
-      background: #18181b;
-      color: #e4e4e7;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-bottom-left-radius: 4px;
-    }
-
-    .bubble-bot b {
-      display: block;
-      margin-bottom: 4px;
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
       font-family: "JetBrains Mono", monospace;
       font-size: 10px;
-      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #ef4444;
+      letter-spacing: 0.25em;
+      color: #f4f4f5;
+      background: rgba(10, 10, 11, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+    }
+
+    .status-pill i {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #ef4444;
+      animation: dot-pulse 1.8s ease-out infinite;
+    }
+
+    .btn-download.is-disabled,
+    .btn-download.is-disabled:hover {
+      background: #27272a;
+      color: #a1a1aa;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
     }
 
     .app-body {
@@ -878,6 +889,16 @@
       }
       to {
         transform: translateX(-50%);
+      }
+    }
+
+    @keyframes dot-pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+      }
+      70%,
+      100% {
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
       }
     }
 
@@ -1150,7 +1171,7 @@
                     <span class="model-params">4B</span>
                   </div>
                   <p class="model-desc">
-                    Основная модель создана для сложных задач.
+                    Основная модель подходит для сложных задач.
                   </p>
                 </div>
               </div>
@@ -1185,7 +1206,7 @@
             Общайтесь с RedCat. <span class="dim">Где удобно.</span>
           </h2>
           <p class="apps-desc">
-            Telegram или десктопное приложение — выбирайте то, что вам ближе.
+            Приложение Redex на компьютер или модель RedCat — выбирайте то, что вам ближе.
           </p>
         </div>
 
@@ -1193,39 +1214,30 @@
           <div class="reveal">
             <article class="app-card">
               <div class="app-preview" aria-hidden="true">
-                <div class="tg-chat">
-                  <div class="bubble bubble-me">Привет, RedCat! 👋</div>
-                  <div class="bubble bubble-bot"><b>RedCat</b>Привет! Я на связи 😼 Чем займёмся?</div>
-                  <div class="bubble bubble-me">Придумай название для котёнка 🐱</div>
+                <div class="model-preview">
+                  <img src="redcat-cat.png" alt="" class="model-preview-logo" />
+                  <span class="status-pill"><i></i>В разработке</span>
                 </div>
               </div>
               <div class="app-body">
                 <div class="app-head">
                   <div class="app-logo">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M9.04 15.31l-.38 5.32c.54 0 .78-.23 1.06-.5l2.55-2.44 5.28 3.87c.97.53 1.66.25 1.92-.9L22.9 4.02c.31-1.42-.51-1.98-1.46-1.63L2.4 9.62c-1.39.54-1.37 1.32-.24 1.67l4.69 1.46L18.2 5.5c.51-.34.98-.15.6.19L9.04 15.31z"/>
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                     </svg>
                   </div>
-                  <h3 class="app-name">Telegram</h3>
-                  <span class="app-platform">Мессенджер</span>
+                  <h3 class="app-name">Скачать модель</h3>
+                  <span class="app-platform">Модель</span>
                 </div>
                 <p class="app-desc">
-                  Общение с RedCat прямо в Telegram. Новости, обновления и помощь
-                  с установкой — в нашем канале.
+                  Модели RedCat сейчас в разработке. Ссылка на GitHub появится
+                  здесь, когда они будут готовы. Общаться с моделью в Telegram
+                  пока нельзя.
                 </p>
                 <div class="app-actions">
-                  <a
-                    class="btn-download btn-sm"
-                    href="https://t.me/RedCatAI"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Открыть RedCat в Telegram"
-                  >
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-8 4h16v2H4v-2z"/>
-                    </svg>
-                    Открыть в Telegram
-                  </a>
+                  <!-- когда модели выйдут, замени span на:
+                       <a class="btn-download btn-sm" href="ССЫЛКА_НА_GITHUB" target="_blank" rel="noopener noreferrer">Скачать с GitHub</a> -->
+                  <span class="btn-download btn-sm is-disabled" aria-disabled="true">В разработке</span>
                 </div>
               </div>
             </article>
