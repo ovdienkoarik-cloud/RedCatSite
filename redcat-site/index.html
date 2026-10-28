@@ -454,6 +454,119 @@
       animation: none;
     }
 
+    /* ------------------------------ models ------------------------------ */
+    .models {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      scroll-margin-top: 80px;
+    }
+
+    .models-inner {
+      padding: 96px 24px;
+    }
+
+    .models-title {
+      margin-top: 20px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .models-title .dim {
+      color: #52525b;
+    }
+
+    .models-list {
+      margin-top: 56px;
+    }
+
+    .model {
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 32px 8px 32px 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .model:first-child {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .model:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .model::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: #ef4444;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .model:hover::before {
+      transform: scaleY(1);
+    }
+
+    .model-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .model-number {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      color: #52525b;
+      transition: color 0.3s ease;
+      flex-shrink: 0;
+      padding-top: 6px;
+    }
+
+    .model:hover .model-number {
+      color: #ef4444;
+    }
+
+    .model-content {
+      max-width: 672px;
+    }
+
+    .model-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .model-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .model-params {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #ef4444;
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      border-radius: 999px;
+      padding: 4px 12px;
+    }
+
+    .model-desc {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #71717a;
+    }
+
     /* ------------------------------ footer ------------------------------ */
     .footer {
       margin-top: auto;
@@ -608,6 +721,34 @@
         font-size: 15px;
       }
 
+      .models-inner {
+        padding: 144px 24px;
+      }
+
+      .models-list {
+        margin-top: 80px;
+      }
+
+      .model {
+        padding: 40px 24px 40px 32px;
+      }
+
+      .model-inner {
+        gap: 40px;
+      }
+
+      .model-number {
+        width: 32px;
+      }
+
+      .model-name {
+        font-size: 24px;
+      }
+
+      .model-desc {
+        font-size: 15px;
+      }
+
       .footer-inner {
         flex-direction: row;
       }
@@ -642,6 +783,7 @@
       </a>
       <nav class="nav" aria-label="Основная навигация">
         <a href="#about" class="nav-link">О модели</a>
+        <a href="#models" class="nav-link">Модели</a>
         <a href="https://t.me/RedCatAI" target="_blank" rel="noopener noreferrer" class="nav-link">Скачать</a>
       </nav>
     </div>
@@ -679,7 +821,7 @@
       </div>
 
       <div class="scroll-hint" aria-hidden="true">
-        <span class="scroll-hint-label mono">Листайте</span>
+        <span class="scroll-hint-label mono"></span>
         <span class="scroll-hint-line"></span>
       </div>
     </section>
@@ -755,10 +897,59 @@
       </div>
     </section>
 
+    <section class="models" id="models">
+      <div class="container models-inner">
+        <div class="reveal">
+          <p class="section-kicker">02 / Модели</p>
+          <h2 class="models-title">
+            Список моделей. <span class="dim">Выберите свою.</span>
+          </h2>
+        </div>
+
+        <div class="models-list">
+          <div class="reveal">
+            <article class="model">
+              <div class="model-inner">
+                <span class="model-number">01</span>
+                <div class="model-content">
+                  <div class="model-head">
+                    <h3 class="model-name">RedCat-1.0-Flash</h3>
+                    <span class="model-params">2B</span>
+                  </div>
+                  <!-- ↓ описание напишите здесь ↓ -->
+                  <p class="model-desc">
+                    Описание модели...
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="reveal" style="transition-delay: 60ms">
+            <article class="model">
+              <div class="model-inner">
+                <span class="model-number">02</span>
+                <div class="model-content">
+                  <div class="model-head">
+                    <h3 class="model-name">RedCat-1.0</h3>
+                    <span class="model-params">4B</span>
+                  </div>
+                  <!-- ↓ описание напишите здесь ↓ -->
+                  <p class="model-desc">
+                    Описание модели...
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="cta-section" id="download">
       <div class="container">
         <div class="reveal">
-          <p class="section-kicker">02 / Скачать</p>
+          <p class="section-kicker">03 / Скачать</p>
           <h2 class="cta-title">
             Заберите Redcat <span class="dim">себе.</span>
           </h2>
